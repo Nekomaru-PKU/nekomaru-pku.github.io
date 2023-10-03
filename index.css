@@ -1,0 +1,291 @@
+/** layout variants:
+    landscape:
+        width >= 1280px:            pc-l (default)
+        width >= 640px && < 1280px: pc-m
+        width <  640px:             mobile-m
+    portrait:
+        width >= 640px:             mobile-l
+        width <  640px:             mobile-m
+
+    media queries for layout variants:
+        pc-any:     (orientation: landscape) and (min-width: 640px)
+        pc-m:       (orientation: landscape) and (min-width: 640px) and (not (min-width: 1280px))
+        mobile-any: (orientation: portrait), (not (min-width: 640px))
+        mobile-l:   (orientation: portrait) and (min-width: 640px)
+        mobile-m:   (not (min-width: 640px))
+        any-m:
+            (not (min-width: 640px)),
+            (orientation: landscape) and (not (min-width: 1280px))
+*/
+
+/************************ global variables ************************/
+:root {
+    --design-px: 0.04vw;
+    --font-size: 1.6vw;
+    --font-size-adjusted: 1em;
+}
+
+@media /*(variant: mobile-any)*/
+    (orientation: portrait),
+    (not (min-width: 640px)) {
+    :root {
+        --design-px: 0.05vw;
+        --font-size: 3vw;
+        --font-size-adjusted: 1em;
+    }
+}
+
+/************************ layout ************************/
+#main {
+    flex-direction: column;
+    row-gap: 1.67em;
+}
+
+#intro-container {
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#intro-name {
+    justify-content: center;
+}
+
+#link-container {
+    flex-direction: column;
+}
+
+#link-container a {
+    align-items: center;
+}
+
+@media /*(variant: any-m)*/
+    (not (min-width: 640px)),
+    (orientation: landscape) and (not (min-width: 1280px)) {
+    #link-group-container {
+        flex-direction: column;
+    }
+}
+
+#link-group-0, #link-group-1 {
+    flex-direction: column;
+}
+
+#copyright {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+@media /*(variant: mobile-any)*/
+    (orientation: portrait),
+    (not (min-width: 640px)) {
+    #copyright {
+        position: inherit;
+    }
+}
+
+/************************ layout dimensions ************************/
+#main {
+    margin-left: var(--design-intro-x);
+    width: 43.2vw;
+}
+
+@media /*(variant: mobile-any)*/
+    (orientation: portrait),
+    (not (min-width: 640px)) { 
+    #main {
+        --mobile-page-margin: 8vw;
+        margin: var(--mobile-page-margin);
+        margin-top: 50vw;
+        width: calc(100vw - 2 * var(--mobile-page-margin));
+    }
+}
+
+#intro-container {
+    height: var(--design-intro-height);
+}
+
+@media /*(variant: mobile-any)*/
+    (orientation: portrait),
+    (not (min-width: 640px)) { 
+    #intro-container {
+        align-items: flex-end;
+        height: auto;
+    }
+}
+
+#intro-greetings {
+    padding: 0.185em 0.9em;
+}
+
+#intro-name {
+    border-radius: 0.74em;
+    padding: 0.06em 0.8em;
+}
+
+#link-container {
+    padding: 0 0.3em;
+}
+
+#link-intro {
+    padding: 0 0.3em;
+}
+
+#link-group-container {
+    padding: 0.3em 0;
+    column-gap: 1em;
+    row-gap: 0.4em;
+}
+
+#link-group-container a {
+    border-radius: 2em;
+    padding: 0.25em 0.4em;
+}
+
+#link-group-container a svg {
+    height: 1.3em;
+    width: 1.3em;
+}
+
+#link-group-container a span {
+    padding-left: 0.4em;
+}
+
+#link-group-container > * {
+    row-gap: 0.4em;
+}
+
+#link-group-0 { flex: 3; }
+#link-group-1 { flex: 4; }
+
+#link-group-1 a {
+    border-width: 0.075rem;
+}
+
+#copyright {
+    margin: 1em 1.5em;
+}
+
+@media /*(variant: mobile-any)*/
+    (orientation: portrait),
+    (not (min-width: 640px)) {
+    #copyright {
+        margin: 0 0.5em;
+    }
+}
+
+/************************ color & typography ************************/
+#intro-greetings {
+    color: white;
+    font-size: 2.7em;
+}
+
+#intro-name {
+    color: var(--color-orange);
+    background-color: white;
+    font-size: 4.5em;
+    font-weight: 400;
+}
+
+@media /*(variant: mobile-any)*/
+    (orientation: portrait),
+    (not (min-width: 640px)) {
+    #intro-name {
+        font-size: 3.6em;
+    }
+}
+
+#link-container {
+    font-size: var(--font-size-adjusted);
+}
+
+#link-container a {
+    color: var(--color-orange);
+    text-decoration: none;
+}
+
+#link-container svg {
+    fill: var(--color-orange);
+}
+
+#link-group-0 a {
+    background-color: white;
+    font-weight: 400;
+}
+
+#link-group-1 a {
+    border-style: solid;
+    border-color: var(--color-orange);
+}
+
+/* this is a temporay fix for the first group of links is not enough */
+@media /*(variant: pc-m)*/
+    (orientation: landscape) and
+    (min-width: 640px) and
+    (not (min-width: 1280px)) {
+    #link-group-1 a {
+        background-color: white;
+        border-style: none;
+    }
+}
+
+#copyright {
+    opacity: 0.6;
+}
+
+@media /*(variant: mobile-any)*/
+    (orientation: portrait),
+    (not (min-width: 640px)) {
+    #copyright {
+        font-size: 0.75em;
+    }
+}
+
+/************************ font size adjustments ************************/
+@media /*(variant: pc-any) and (width < 1280px)*/
+    (orientation: landscape) and
+    (min-width: 640px) and
+    (not (min-width: 1280px)) {
+    :root {
+        --font-size-adjusted: 1.2em;
+    }
+}
+
+@media /*(variant: pc-any) and (width < 1080px)*/
+    (orientation: landscape) and
+    (min-width: 640px) and
+    (not (min-width: 1080px)) {
+    :root {
+        --font-size-adjusted: 1.4em;
+    }
+}
+
+@media /*(variant: pc-any) and (width < 880px)*/
+    (orientation: landscape) and
+    (min-width: 640px) and
+    (not (min-width: 880px)) {
+    :root {
+        --font-size-adjusted: 1.6em;
+    }
+}
+
+@media /*(variant: mobile-any) and (width < 560px)*/
+    (not (min-width: 560px)) {
+    :root {
+        --font-size-adjusted: 1.2em;
+    }
+}
+
+@media /*(variant: mobile-any) and (width < 480px)*/
+    (not (min-width: 480px)) {
+    :root {
+        --font-size-adjusted: 1.4em;
+    }
+}
+
+@media /*(variant: mobile-any) and (width < 400px)*/
+    (not (min-width: 400px)) {
+    :root {
+        --font-size-adjusted: 1.6em;
+    }
+}
